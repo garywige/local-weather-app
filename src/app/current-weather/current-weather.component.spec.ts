@@ -3,7 +3,7 @@ import { By } from '@angular/platform-browser'
 import { of } from 'rxjs'
 
 import { WeatherService } from '../weather/weather.service'
-import { WeatherServiceFake, fakeWeather } from '../weather/weather.service.fake'
+import { fakeWeather } from '../weather/weather.service.fake'
 import { CurrentWeatherComponent } from './current-weather.component'
 
 describe('CurrentWeatherComponent', () => {
@@ -12,7 +12,9 @@ describe('CurrentWeatherComponent', () => {
   let weatherServiceMock: jasmine.SpyObj<WeatherService>
 
   beforeEach(async () => {
-    let weatherServiceSpy = jasmine.createSpyObj('WeatherService', ['getCurrentWeather'])
+    const weatherServiceSpy = jasmine.createSpyObj('WeatherService', [
+      'getCurrentWeather',
+    ])
 
     await TestBed.configureTestingModule({
       declarations: [CurrentWeatherComponent],
