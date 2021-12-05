@@ -1,3 +1,4 @@
+import { Component } from '@angular/core'
 import { TestBed } from '@angular/core/testing'
 
 import { AppComponent } from './app.component'
@@ -5,7 +6,7 @@ import { AppComponent } from './app.component'
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AppComponent],
+      declarations: [AppComponent, MockCurrentWeatherComponent],
     }).compileComponents()
   })
 
@@ -22,3 +23,9 @@ describe('AppComponent', () => {
     expect(compiled.querySelector('h1')?.textContent).toContain('LocalCast Weather')
   })
 })
+
+@Component({
+  selector: 'app-current-weather',
+  template: '',
+})
+class MockCurrentWeatherComponent {}
