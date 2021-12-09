@@ -8,6 +8,7 @@
     "build:prod": "ng build --prod",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "test:nowatch": "ng test --watch=false",
     "style": "import-sort -l \"**/{src,tests,e2e}/*.ts\" && prettier --check \"**/{src,tests,e2e}/*.{*css,ts}\"",
     "style:fix": "import-sort --write \"**/{src,tests,e2e}/*.ts\" && prettier --write \"**/{src,tests,e2e}/*.{*css,ts}\" && js-beautify \"src/**/*.html\"",
     "lint": "tslint --config tslint.json --project . -e \"**/{test,polyfills}.ts\"",
