@@ -23,7 +23,7 @@ jobs:
       - run: npm run style
       - run: npm run lint
       - run: npm run build:prod
-      # - run: npm run test:coverage -- --watch=false
+      - run: npm run test:nowatch
       - run:
           name: Tar && Gzip compiled app
           command: tar zcf dist.tar.gz dist/local-weather-app
