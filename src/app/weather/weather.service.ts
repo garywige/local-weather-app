@@ -71,7 +71,7 @@ export class WeatherService implements IWeatherService {
   }
 
   getCurrentWeatherByCoords(coords: Coordinates): Observable<ICurrentWeather> {
-    let uriParams = new HttpParams()
+    const uriParams = new HttpParams()
       .set('lat', coords.latitude.toString())
       .set('lon', coords.longitude.toString())
 

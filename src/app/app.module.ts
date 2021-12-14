@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 import { AppComponent } from './app.component'
 import { CurrentWeatherComponent } from './current-weather/current-weather.component'
-import { MaterialModule } from './material.module';
+import { MaterialModule } from './material.module'
 import { CitySearchComponent } from './city-search/city-search.component'
 
 @NgModule({
