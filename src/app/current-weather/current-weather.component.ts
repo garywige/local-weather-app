@@ -14,9 +14,7 @@ export class CurrentWeatherComponent implements OnInit {
   constructor(private weatherService: WeatherService) {}
 
   ngOnInit(): void {
-    this.weatherService
-      .getCurrentWeather('Simi Valley', 'US')
-      .subscribe((data) => (this.current = data))
+    this.weatherService.currentWeather$.subscribe((data) => (this.current = data))
   }
 
   getOrdinal(date: number) {
