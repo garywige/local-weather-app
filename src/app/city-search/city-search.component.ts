@@ -9,14 +9,12 @@ import { WeatherService } from '../weather/weather.service'
   templateUrl: './city-search.component.html',
   styleUrls: ['./city-search.component.css'],
 })
-export class CitySearchComponent implements OnInit {
+export class CitySearchComponent {
   search: FormControl
 
   constructor(private weatherService: WeatherService) {
-    this.search = new FormControl('', [Validators.minLength(2)])
-  }
+    this.search = new FormControl('', [Validators.minLength(2), Validators.required])
 
-  ngOnInit(): void {
     this.search.valueChanges
       .pipe(
         debounceTime(1000),
