@@ -29,5 +29,7 @@ export class WeatherServiceFake implements IWeatherService {
     return of(fakeWeather)
   }
 
-  updateCurrentWeather(search: string | number, country?: string) {}
+  updateCurrentWeather(search: string | number, country?: string) {
+    throw new Error('not implemented')
+  }
 }

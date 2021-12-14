@@ -7,7 +7,6 @@ import { CurrentWeatherComponent } from './current-weather.component'
 describe('CurrentWeatherComponent', () => {
   let component: CurrentWeatherComponent
   let fixture: ComponentFixture<CurrentWeatherComponent>
-  let weatherServiceMock: jasmine.SpyObj<WeatherService>
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -20,7 +19,6 @@ describe('CurrentWeatherComponent', () => {
       ],
       imports: [],
     }).compileComponents()
-    weatherServiceMock = TestBed.inject(WeatherService) as any
   })
 
   beforeEach(() => {
