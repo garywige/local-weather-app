@@ -29,7 +29,7 @@ export class PostalCodeService implements IPostalCodeService {
     const uriParams = new HttpParams()
       .set('maxRows', '1')
       .set('username', environment.username)
-      .set('postalCode', postalCode)
+      .set('postalcode', postalCode)
 
     return this.httpClient
       .get<IPostalCodeData>(
