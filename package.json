@@ -33,7 +33,9 @@
     "docker:taillogs": "echo Web Server Logs: && cross-conf-env docker logs -f $npm_package_config_imageName",
     "docker:open": "sleep 2 && cross-conf-env open-cli http://localhost:$npm_package_config_imagePort",
     "docker:debugmessage": "echo Docker Debug Completed Successfully! Hit Ctrl+C to terminate log tailing.",
-    "docker:debug": "run-s -cs docker:build docker:run docker:open docker:debugmessage docker:taillogs"
+    "docker:debug": "run-s -cs docker:build docker:run docker:open docker:debugmessage docker:taillogs",
+    "gcloud:build": "gcloud builds submit --tag gcr.io/local-cast-weather/local-cast-weather --project local-cast-weather",
+    "gcloud:deploy": "gcloud run deploy --image gcr.io/local-cast-weather/local-cast-weather --platform managed --project local-cast-weather --region us-west2"
   },
   "private": true,
   "dependencies": {
