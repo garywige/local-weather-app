@@ -1,4 +1,6 @@
 version: 2.1
+orbs:
+  cloudrun: circleci/gcp-cloud-run@1.0.2
 jobs:
   build:
     docker:
@@ -29,8 +31,71 @@ jobs:
           command: tar zcf dist.tar.gz dist/local-weather-app
       - store_artifacts:
           path: dist.tar.gz
+      - run:
+          name: Move compiled app to workspace
+          command: |
+            set -exu
+            mkdir -p /tmp/workspace/dist
+            mv dist/local-weather-app /tmp/workspace/dist
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths:
+            - dist/local-weather-app
+  deploy_vercel:
+    docker:
+      - image: circleci/node:lts
+    working_directory: ~/repo
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - run: npx vercel --token $VERCEL_TOKEN --platform-version 2 --prod /tmp/workspace/dist/local-weather-app --confirm
+  deploy_cloudrun:
+    docker:
+      - image: 'cimg/base:stable'
+    working_directory: ~/repo
+    steps:
+      - attach_workspace:
+          at: /tmp/workspace
+      - checkout
+      - run:
+          name: Copy built app to dist folder
+          command: cp -avR /tmp/workspace/dist/ .
+      - cloudrun/init
+      - cloudrun/build:
+          tag: 'gcr.io/${GOOGLE_PROJECT_ID}/test-${CIRCLE_SHA1}'
+          source: ~/repo
+      - cloudrun/deploy:
+          image: 'gcr.io/${GOOGLE_PROJECT_ID}/test-${CIRCLE_SHA1}'
+          platform: managed
+          region: $GOOGLE_COMPUTE_ZONE
+          service-name: $GOOGLE_PROJECT_ID
+          unauthenticated: true
+      - run:
+          command: >
+            GCP_API_RESULTS=$(curl -s "$GCP_DEPLOY_ENDPOINT");
+            if ! echo "$GCP_API_RESULTS" | grep -o "Local";
+            then
+              echo "Result is unexpected"
+              echo 'Result: '
+              echo "$GCP_API_RESULTS"
+              exit 1;
+            fi
+          name: Test managed deployed service.
 workflows:
   version: 2
-  build-and-test:
+  build-test-deploy:
     jobs:
       - build
+      - deploy_vercel:
+          requires:
+            - build
+      - hold:
+          type: approval
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
+      - deploy_cloudrun:
+          requires:
+            - hold
