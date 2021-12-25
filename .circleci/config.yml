@@ -73,7 +73,7 @@ jobs:
       - run:
           command: >
             GCP_API_RESULTS=$(curl -s "$GCP_DEPLOY_ENDPOINT");
-            if ! echo "$GCP_API_RESULTS" | grep -nwo "Local";
+            if ! echo "$GCP_API_RESULTS" | grep -o "Local";
             then
               echo "Result is unexpected"
               echo 'Result: '
