@@ -72,7 +72,7 @@ jobs:
           unauthenticated: true
       - run:
           command: >
-            GCP_API_RESULTS=$(curl -s "$GCP_DEPLOY_ENDPOINT")
+            GCP_API_RESULTS=$(curl -s "$GCP_DEPLOY_ENDPOINT");
             if ! echo "$GCP_API_RESULTS" | grep -nwo "LocalCast Weather";
             then
               echo "Result is unexpected"
