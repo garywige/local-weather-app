@@ -77,7 +77,7 @@ jobs:
             then
               echo "Result is unexpected"
               echo 'Result: '
-              curl -s "$GCP_DEPLOY_ENDPOINT"
+              echo "$GCP_API_RESULTS"
               exit 1;
             fi
           name: Test managed deployed service.
